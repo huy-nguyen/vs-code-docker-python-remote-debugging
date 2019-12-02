@@ -1,0 +1,20 @@
+version: '2.4'
+services:
+  editor:
+    build:
+      context: .
+      dockerfile: editor.Dockerfile
+    command: /bin/sh -c "while sleep 1000; do :; done"
+    # Both the editor and script containers need to have the project directory mounted as volumes:
+    volumes:
+      - .:/home/jovyan/work:delegated
+
+  script:
+    build:
+      context: .
+      dockerfile: script.Dockerfile
+    command: python test_script.py
+    volumes:
+      - .:/home/jovyan/work:delegated
+
+
